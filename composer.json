@@ -1,26 +1,35 @@
 {
-    "name": "richweber/yii2-content-manager",
-    "version":"0.1.0",
-    "description": "Yii2 content manager",
-    "keywords": ["yii2", "content", "manager"],
-    "type": "yii2-extension",
-    "license": "BSD-3-Clause",
-    "support": {
-        "issues": "https://github.com/RichWeber/yii2-content-manager/issues",
-        "wiki": "https://github.com/RichWeber/yii2-content-manager/wiki",
-        "source": "https://github.com/RichWeber/yii2-content-manager"
-    },
-    "authors": [
-        {
-            "name": "RichWeber",
-            "email": "rbagatyi@gmail.com"
-        }
-    ],
-    "require": {
-        "yiisoft/yii2": ">=2.0.6"
-    },
-    "minimum-stability": "dev",
-    "autoload": {
-        "psr-4": { "richweber\\content\\manager\\": "" }
+  "name": "richweber/yii2-content-manager",
+  "version":"0.1.0",
+  "description": "Yii2 content manager",
+  "keywords": ["yii2", "content", "manager"],
+  "type": "yii2-extension",
+  "license": "BSD-3-Clause",
+  "support": {
+    "issues": "https://github.com/RichWeber/yii2-content-manager/issues",
+    "wiki": "https://github.com/RichWeber/yii2-content-manager/wiki",
+    "source": "https://github.com/RichWeber/yii2-content-manager"
+  },
+  "authors": [
+    {
+      "name": "RichWeber",
+      "email": "rbagatyi@gmail.com"
     }
+  ],
+  "require": {
+    "yiisoft/yii2": ">=2.0.6",
+    "creocoder/yii2-translateable": "*"
+  },
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": { "richweber\\content\\manager\\": "" }
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "richweber\\content\\manager\\Installer::makeMigration"
+    ],
+    "post-update-cmd": [
+      "richweber\\content\\manager\\Installer::makeMigration"
+    ]
+  }
 }
