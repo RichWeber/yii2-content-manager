@@ -1,0 +1,26 @@
+{
+    "name": "richweber/yii2-content-manager",
+    "version":"0.1.0",
+    "description": "Yii2 content manager",
+    "keywords": ["yii2", "content", "manager"],
+    "type": "yii2-extension",
+    "license": "BSD-3-Clause",
+    "support": {
+        "issues": "https://github.com/RichWeber/yii2-content-manager/issues",
+        "wiki": "https://github.com/RichWeber/yii2-content-manager/wiki",
+        "source": "https://github.com/RichWeber/yii2-content-manager"
+    },
+    "authors": [
+        {
+            "name": "RichWeber",
+            "email": "rbagatyi@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": { "richweber\\content\\manager\\": "" }
+    }
+}
