@@ -7,6 +7,7 @@ use yii\redactor\widgets\Redactor;
 /* @var $this yii\web\View */
 /* @var $model richweber\content\manager\models\Content */
 /* @var $form yii\widgets\ActiveForm */
+/* @link http://imperavi.com/redactor/docs/settings/clean/ */
 ?>
 
 <div class="content-form">
@@ -18,7 +19,12 @@ use yii\redactor\widgets\Redactor;
     <?php
         foreach (Yii::$app->urlManager->languages as $language => $details) {
             echo $form->field($model->translate($language), "[$language]name")->textInput();
-            echo $form->field($model->translate($language), "[$language]content")->widget(Redactor::classname());
+            echo $form->field($model->translate($language), "[$language]content")->widget(Redactor::classname(), [
+                'clientOptions' => [
+                    'plugins' => ['clips', 'fontcolor','imagemanager', 'fullscreen'],
+                    'replaceDivs' => false
+                ]
+            ]);
         }
     ?>
 
