@@ -69,14 +69,19 @@ class Content extends ActiveRecord
         ];
     }
 
-    public function getCurrentName()
+    public function getCurrentContent()
     {
         return $this->translate(substr(Yii::$app->language, 0, 2));
     }
 
     public function getName()
     {
-        return $this->getCurrentName()->name;
+        return $this->getCurrentContent()->name;
+    }
+
+    public function getContent()
+    {
+        return $this->getCurrentContent()->content;
     }
 
     public function getTranslations()

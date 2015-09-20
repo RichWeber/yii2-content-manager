@@ -12,6 +12,13 @@ use richweber\content\manager\models\Content;
  */
 class ContentSearch extends Content
 {
+    public $created_from;
+    public $created_to;
+    public $updated_from;
+    public $updated_to;
+    public $name;
+    public $content;
+
     /**
      * @inheritdoc
      */
@@ -19,7 +26,8 @@ class ContentSearch extends Content
     {
         return [
             [['id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['key'], 'safe'],
+            [['created_from', 'created_to', 'updated_from', 'updated_to'], 'date', 'format' => 'php:Y-m-d'],
+            [['key', 'name', 'content'], 'safe'],
         ];
     }
 
@@ -47,6 +55,20 @@ class ContentSearch extends Content
             'query' => $query,
         ]);
 
+        $dataProvider->setSort([
+            'attributes' => [
+                'id',
+                'status',
+                'key',
+                'created_at',
+                'updated_at',
+                'name' => [
+                    'asc' => ['name' => SORT_ASC],
+                    'desc' => ['name' => SORT_DESC],
+                ]
+            ]
+        ]);
+
         $this->load($params);
 
         if (!$this->validate()) {
@@ -58,11 +80,21 @@ class ContentSearch extends Content
         $query->andFilterWhere([
             'id' => $this->id,
             'status' => $this->status,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ]);
 
+        $query
+            ->andFilterWhere(['>=', 'created_at', $this->created_from ? strtotime($this->created_from . ' 00:00:00') : null])
+            ->andFilterWhere(['<=', 'created_at', $this->created_to ? strtotime($this->created_to . ' 23:59:59') : null])
+            ->andFilterWhere(['>=', 'updated_at', $this->updated_from ? strtotime($this->updated_from . ' 00:00:00') : null])
+            ->andFilterWhere(['<=', 'updated_at', $this->updated_to ? strtotime($this->updated_to . ' 23:59:59') : null]);
+
         $query->andFilterWhere(['like', 'key', $this->key]);
+
+        $query->joinWith(['translations' => function ($query) {
+            if ($this->name) {
+                $query->andWhere(['like', 'name', $this->name]);
+            }
+        }]);
 
         return $dataProvider;
     }

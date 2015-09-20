@@ -24,10 +24,6 @@ use yii\redactor\widgets\Redactor;
 
     <?= $form->field($model, 'status')->textInput() ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
-
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('contentManager', 'Create') : Yii::t('contentManager', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
