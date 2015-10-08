@@ -2,12 +2,14 @@
 
 namespace richweber\content\manager\models\query;
 
+use yii\db\ActiveQuery;
+
 /**
  * This is the ActiveQuery class for [[\richweber\content\manager\models\Content]].
  *
  * @see \richweber\content\manager\models\Content
  */
-class ContentQuery extends \yii\db\ActiveQuery
+class ContentQuery extends ActiveQuery
 {
     /*public function active()
     {

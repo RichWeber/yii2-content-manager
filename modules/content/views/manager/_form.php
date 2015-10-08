@@ -1,5 +1,6 @@
 <?php
 
+use richweber\content\manager\models\Content;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\redactor\widgets\Redactor;
@@ -7,6 +8,7 @@ use yii\redactor\widgets\Redactor;
 /* @var $this yii\web\View */
 /* @var $model richweber\content\manager\models\Content */
 /* @var $form yii\widgets\ActiveForm */
+
 /* @link http://imperavi.com/redactor/docs/settings/clean/ */
 ?>
 
@@ -28,10 +30,12 @@ use yii\redactor\widgets\Redactor;
         }
     ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?= $form->field($model, 'status')->dropDownList(Content::getStatuses()) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('contentManager', 'Create') : Yii::t('contentManager', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton(
+            $model->isNewRecord ? Yii::t('content-manager', 'Create') : Yii::t('content-manager', 'Update'),
+            ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
