@@ -34,6 +34,7 @@ class ManagerController extends Controller
     {
         $searchModel = new ContentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->sort = ['defaultOrder' => ['id' => SORT_DESC]];
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -48,9 +49,7 @@ class ManagerController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        return $this->render('view', ['model' => $this->findModel($id)]);
     }
 
     /**
@@ -70,12 +69,11 @@ class ManagerController extends Controller
 
         if (Yii::$app->request->post('ContentTranslation', [])
             && $model->load(Yii::$app->request->post())
-            && $model->save()) {
+            && $model->save()
+        ) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            return $this->render('create', ['model' => $model]);
         }
     }
 
@@ -101,12 +99,11 @@ class ManagerController extends Controller
 
         if (Yii::$app->request->post('ContentTranslation', [])
             && $model->load(Yii::$app->request->post())
-            && $model->save()) {
+            && $model->save()
+        ) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            return $this->render('update', ['model' => $model]);
         }
     }
 

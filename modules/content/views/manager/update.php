@@ -5,19 +5,15 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model richweber\content\manager\models\Content */
 
-$this->title = Yii::t('contentManager', 'Update {modelClass}: ', [
-    'modelClass' => 'Content',
-]) . ' ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('contentManager', 'Contents'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('contentManager', 'Update');
+$this->title = Yii::t('content-manager', 'Update: {name}: ', ['name' => $model->name]);
+$this->params['breadcrumbs'][] = ['label' => Yii::t('content-manager', 'Content manager'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = Yii::t('content-manager', 'Update');
 ?>
 <div class="content-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h2><?= Html::encode($this->title) ?></h2>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+    <?= $this->render('_form', ['model' => $model]) ?>
 
 </div>

@@ -12,12 +12,25 @@ use richweber\content\manager\models\Content;
  */
 class ContentSearch extends Content
 {
-    public $created_from;
-    public $created_to;
-    public $updated_from;
-    public $updated_to;
+    /**
+     * @var string Name of the content block
+     */
     public $name;
+
+    /**
+     * @var string Content
+     */
     public $content;
+
+    /**
+     * @var string Date range
+     */
+    public $createdRange;
+
+    /**
+     * @var string Date range
+     */
+    public $updatedRange;
 
     /**
      * @inheritdoc
@@ -26,8 +39,7 @@ class ContentSearch extends Content
     {
         return [
             [['id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['created_from', 'created_to', 'updated_from', 'updated_to'], 'date', 'format' => 'php:Y-m-d'],
-            [['key', 'name', 'content'], 'safe'],
+            [['key', 'name', 'content', 'createdRange', 'updatedRange'], 'safe'],
         ];
     }
 
@@ -36,7 +48,6 @@ class ContentSearch extends Content
      */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
@@ -51,9 +62,7 @@ class ContentSearch extends Content
     {
         $query = Content::find();
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+        $dataProvider = new ActiveDataProvider(['query' => $query]);
 
         $dataProvider->setSort([
             'attributes' => [
@@ -72,8 +81,7 @@ class ContentSearch extends Content
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+            $query->where('0=1');
             return $dataProvider;
         }
 
@@ -82,17 +90,39 @@ class ContentSearch extends Content
             'status' => $this->status,
         ]);
 
-        $query
-            ->andFilterWhere(['>=', 'created_at', $this->created_from ? strtotime($this->created_from . ' 00:00:00') : null])
-            ->andFilterWhere(['<=', 'created_at', $this->created_to ? strtotime($this->created_to . ' 23:59:59') : null])
-            ->andFilterWhere(['>=', 'updated_at', $this->updated_from ? strtotime($this->updated_from . ' 00:00:00') : null])
-            ->andFilterWhere(['<=', 'updated_at', $this->updated_to ? strtotime($this->updated_to . ' 23:59:59') : null]);
+        if ($this->createdRange) {
+            $dateArray = explode('-', $this->createdRange);
+            $dateFrom = trim($dateArray[0]);
+            $dateTo = trim($dateArray[1]);
+
+            $query
+                ->andWhere('created_at <= :dateTo', [':dateTo' => $dateTo])
+                ->andWhere('created_at >= :dateFrom', [':dateFrom' => $dateFrom]);
+        } else {
+            $query->andFilterWhere(['created_at' => $this->created_at]);
+        }
+
+        if ($this->updatedRange) {
+            $dateArray = explode('-', $this->updatedRange);
+            $dateFrom = trim($dateArray[0]);
+            $dateTo = trim($dateArray[1]);
+
+            $query
+                ->andWhere('updated_at <= :dateTo', [':dateTo' => $dateTo])
+                ->andWhere('updated_at >= :dateFrom', [':dateFrom' => $dateFrom]);
+        } else {
+            $query->andFilterWhere(['updated_at' => $this->updated_at]);
+        }
 
         $query->andFilterWhere(['like', 'key', $this->key]);
 
         $query->joinWith(['translations' => function ($query) {
             if ($this->name) {
                 $query->andWhere(['like', 'name', $this->name]);
+            }
+
+            if ($this->content) {
+                $query->andWhere(['like', 'content', $this->content]);
             }
         }]);
 

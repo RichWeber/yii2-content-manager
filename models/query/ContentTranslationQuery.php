@@ -2,12 +2,14 @@
 
 namespace richweber\content\manager\models\query;
 
+use yii\db\ActiveQuery;
+
 /**
  * This is the ActiveQuery class for [[\richweber\content\manager\models\ContentTranslation]].
  *
  * @see \richweber\content\manager\models\ContentTranslation
  */
-class ContentTranslationQuery extends \yii\db\ActiveQuery
+class ContentTranslationQuery extends ActiveQuery
 {
     /*public function active()
     {

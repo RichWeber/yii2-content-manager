@@ -6,20 +6,20 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model richweber\content\manager\models\Content */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('contentManager', 'Contents'), 'url' => ['index']];
+$this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('content-manager', 'Content manager'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="content-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h2><?= Html::encode($this->title) ?></h2>
 
     <p>
-        <?= Html::a(Yii::t('contentManager', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('contentManager', 'Delete'), ['delete', 'id' => $model->id], [
+        <?= Html::a(Yii::t('content-manager', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('content-manager', 'Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => Yii::t('contentManager', 'Are you sure you want to delete this item?'),
+                'confirm' => Yii::t('content-manager', 'Are you sure you want to delete this item?'),
                 'method' => 'post',
             ],
         ]) ?>
@@ -30,9 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'key',
-            'status',
-            'created_at:datetime',
-            'updated_at:datetime',
+            'statusName',
+            'created_at:date',
+            'updated_at:date',
             'name',
             'content:html',
         ],

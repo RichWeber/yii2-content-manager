@@ -3,6 +3,8 @@
 namespace richweber\content\manager\models;
 
 use Yii;
+use richweber\content\manager\models\query\ContentTranslationQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%cm_content_translation}}".
@@ -12,7 +14,7 @@ use Yii;
  * @property string $name
  * @property string $content
  */
-class ContentTranslation extends \yii\db\ActiveRecord
+class ContentTranslation extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -42,30 +44,30 @@ class ContentTranslation extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         switch ($this->language) {
-            case 'en':
+            case 'uk':
                 return [
-                    'name' => 'Marker name',
-                    'content' => 'Marker name',
+                    'name' => 'Заголовок',
+                    'content' => 'Блок контента',
                 ];
             case 'ru':
                 return [
-                    'name' => 'Название маркера',
-                    'content' => 'Marker name',
+                    'name' => 'Тема',
+                    'content' => 'Блок контента',
                 ];
             default:
                 return [
-                    'name' => 'Назва маркера',
-                    'content' => 'Marker name',
+                    'name' => 'Topic',
+                    'content' => 'Content',
                 ];
         }
     }
 
     /**
      * @inheritdoc
-     * @return \richweber\content\manager\models\query\ContentTranslationQuery the active query used by this AR class.
+     * @return ContentTranslationQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new \richweber\content\manager\models\query\ContentTranslationQuery(get_called_class());
+        return new ContentTranslationQuery(get_called_class());
     }
 }
