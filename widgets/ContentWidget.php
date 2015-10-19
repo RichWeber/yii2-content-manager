@@ -29,7 +29,8 @@ class ContentWidget extends Widget
             if (null !== $model) {
                 echo $model->content;
             } else {
-                throw new InvalidValueException('Content not found');
+                return null;
+                // throw new InvalidValueException('Content not found');
             }
         } else {
             throw new InvalidParamException('Invalid content key');
